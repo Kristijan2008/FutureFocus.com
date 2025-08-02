@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">FutureFocus - Dein Balkan-Shop</title>
+
+  <!-- Google Fonts: Orbitron & Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome für Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+:root {
+  /* FutureFocus Farbschema */
+  --ff-bg-main: #23262B;
+  --ff-bg-card: #2E3136;
+  --ff-primary: #18ECE6;
+  --ff-secondary: #2573C3;
+  --ff-text-main: #E8E9ED;
+  --ff-pink: #ff00f0;
+}
+
+/* BODY und Fonts */
+body {
+  overflow-x: hidden;
+  background: var(--ff-bg-main);
+  color: var(--ff-text-main);
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+}
+
+/* Bestseller Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: 22px;
+}
+
+.product-card {
+  background: var(--ff-bg-card);
+  border-radius: 16px;
+  box-shadow: 0 0 20px #18ece611, 0 0 7px #2573c311;
+  padding: 22px 17px 19px 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.19s, box-shadow 0.2s;
+  position: relative;
+}
+.product-card:hover {
+  transform: translateY(-7px) scale(1.028);
+  box-shadow: 0 0 44px #18ece633, 0 0 14px #2573c355;
+}
+.product-card img {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  margin-bottom: 13px;
+  box-shadow: 0 0 13px #18ece655;
+}
+.product-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #00f0ff;
+  font-size: 19px;
+  margin-bottom: 7px;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+.product-desc {
+  color: #eee;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 9px;
+}
+.product-price {
+  color: #ff00f0;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.product-btn {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  color: #fff;
+  padding: 10px 23px;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 13px #00f0ff33;
+  transition: background 0.17s, box-shadow 0.15s;
+  margin-top: 5px;
+}
+.product-btn:hover {
+  background: linear-gradient(90deg, #ff00f0, #00f0ff);
+  box-shadow: 0 0 24px #ff00f099;
+}
+/* NEUE Hover Styles für Header & Buttons */
+#categoriesBtn:hover {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  box-shadow: 0 0 22px #00f0ff, 0 0 22px #ff00f0;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  color: #fff !important;
+}
+#loginBtn:hover {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  box-shadow: 0 0 22px #00f0ff, 0 0 22px #ff00f0;
+  transform: scale(1.05);
+  color: #fff !important;
+  transition: all 0.3s ease;
+}
+#voiceBtn:hover {
+  color: #ff00f0;
+  filter: drop-shadow(0 0 10px #ff00f0cc);
+  transform: scale(1.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+button.fa-shopping-cart:hover {
+  box-shadow: 0 0 15px #00f0ff, 0 0 15px #ff00f0;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+/* Cursor Pointer für alle interaktiven Elemente */
+button, #categoriesBtn, #loginBtn, #voiceBtn, .product-btn {
+  cursor: pointer;
+}
+@media (max-width: 1000px) {
+  .products-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .product-card { padding: 16px 6vw 14px 6vw; }
+}
+</style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="glow-border" style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to right, #181a1d 80%, #23262B 100%); padding: 18px 36px 12px 36px; border-radius: 18px; margin: 28px 2vw 10px 2vw; position: sticky; top: 0; z-index: 99;">
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <img src="Logo.Startseite.png" alt="FutureFocus Logo" style="height: 50px;">
+      <span style="font-size: 32px; font-family: 'Orbitron', sans-serif; color: #18ECE6; text-shadow: 0 0 10px #18ECE6;">FutureFocus</span>
+    </div>
+    <nav style="flex: 1; margin-left: 40px;">
+      <div style="position: relative; display: inline-block;">
+        <button id="categoriesBtn" class="anim-btn" style="background: linear-gradient(90deg, #18ECE6, #2573C3); color: #fff; padding: 11px 30px; font-size: 19px; border-radius: 13px; font-family: 'Orbitron', sans-serif; box-shadow: 0 0 16px #18ECE677; letter-spacing: 0.06em;">
+          <i class="fas fa-bars" style="margin-right: 10px;"></i> Kategorien
+        </button>
+        <div id="categoriesDropdown" style="display: none; position: absolute; top: 55px; left: 0; background: #23262B; border-radius: 13px; box-shadow: 0 0 22px #18ECE666; min-width: 260px; z-index: 200; padding: 17px 0;">
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Gaming</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Technik</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Haushalt</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Smartphones</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Küche</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Tools</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Beauty</a>
+          <a href="#" style="display: block; padding: 13px 35px; color: #fff;">Zubehör</a>
+        </div>
+      </div>
+    </nav>
+    <div style="display: flex; align-items: center; background: rgba(24,236,230,0.10); border: 1.6px solid #18ECE6; border-radius: 30px; padding: 5px 14px; width: 340px; margin-left: 40px; box-shadow: 0 0 8px #18ECE6;">
+      <input id="searchInput" type="text" placeholder="Produkte suchen..." style="background: transparent; border: none; color: #E8E9ED; width: 100%; outline: none; padding: 9px 14px; font-size: 17px;">
+      <button id="voiceBtn" style="background: transparent; border: none; cursor: pointer; color: #18ECE6; font-size: 24px; margin-left: 8px;"><i class="fas fa-microphone"></i></button>
+    </div>
+    <div style="display: flex; gap: 16px; align-items: center; margin-left: 40px;">
+      <button id="loginBtn" class="anim-btn" style="background: linear-gradient(90deg, #18ECE6, #2573C3); color: white; padding: 11px 23px; border-radius: 10px; font-weight: bold; font-size: 17px; font-family: 'Roboto', sans-serif; box-shadow: 0 0 14px #18ECE6;">Login / Registrieren</button>
+      <button onclick="alert('Warenkorb geöffnet!')" class="anim-btn" style="background: linear-gradient(90deg, #18ECE6, #2573C3); color: white; padding: 10px 18px; border-radius: 10px; font-weight: bold; font-size: 17px; box-shadow: 0 0 14px #2573C3;"><i class="fas fa-shopping-cart"></i></button>
+    </div>
+  </header>
+
+  <!-- SOCIAL MEDIA ICONS -->
+  <div style="display: flex; gap: 18px; justify-content: center; align-items: center; margin-top: 0;">
+    <a href="#" style="color: #18ECE6; font-size: 27px;" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    <a href="#" style="color: #18ECE6; font-size: 27px;" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" style="color: #2573C3; font-size: 27px;" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+    <a href="#" style="color: #2573C3; font-size: 27px;" title="Facebook"><i class="fab fa-facebook"></i></a>
+  </div>
+<!-- CHATBOT BUTTON – immer sichtbar, groß, unten rechts -->
+<button id="chatbotButton" title="Chatbot öffnen"
+  style="
+    position: fixed;
+    right: 32px;
+    bottom: 34px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #00f0ff, #ff00f0 88%);
+    color: #fff;
+    font-size: 34px;
+    box-shadow: 0 0 34px #00f0ff77, 0 0 17px #ff00f088;
+    border: none;
+    z-index: 99999;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  ">
+  <i class="fas fa-robot"></i>
+</button>
+  <script>
+    // Dropdown Menü (Amazon-Style)
+    const categoriesBtn = document.getElementById("categoriesBtn");
+    const categoriesDropdown = document.getElementById("categoriesDropdown");
+    categoriesBtn.addEventListener("mouseover", () => {
+      categoriesDropdown.style.display = "block";
+    });
+    categoriesBtn.addEventListener("mouseout", () => {
+      setTimeout(() => { categoriesDropdown.style.display = "none"; }, 350);
+    });
+    categoriesDropdown.addEventListener("mouseover", () => {
+      categoriesDropdown.style.display = "block";
+    });
+    categoriesDropdown.addEventListener("mouseout", () => {
+      categoriesDropdown.style.display = "none";
+    });
+
+    // Voice Search aktivieren (Web Speech API)
+    const voiceBtn = document.getElementById('voiceBtn');
+    const searchInput = document.getElementById('searchInput');
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'de-DE';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      voiceBtn.addEventListener('click', () => {
+        recognition.start();
+      });
+      recognition.onresult = (event) => {
+        searchInput.value = event.results[0][0].transcript;
+      };
+      recognition.onerror = (event) => {
+        console.error('Spracherkennung Fehler:', event.error);
+      };
+    } else {
+      voiceBtn.style.display = 'none';
+      console.warn('Spracherkennung wird nicht unterstützt.');
+    }
+
+    // Login/Register Modal
+    const loginBtn = document.getElementById('loginBtn');
+    const modalBg = document.getElementById('modalBg');
+    const closeModal = document.getElementById('closeModal');
+    loginBtn.onclick = () => { modalBg.style.display = 'flex'; }
+    closeModal.onclick = () => { modalBg.style.display = 'none'; }
+    window.onclick = function(e) {
+      if (e.target == modalBg) { modalBg.style.display = "none"; }
+    };
+  </script>
+  <!-- HERO-BEREICH mit animiertem Banner und Slogan -->
+  <section style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 70px 0 38px 0; position: relative;">
+    <div style="background: linear-gradient(90deg, #00f0ff33 0%, #ff00f033 100%); border-radius: 18px; box-shadow: 0 0 60px #00f0ff33; padding: 44px 38px 38px 38px; width: 95vw; max-width: 1280px; display: flex; flex-direction: column; align-items: center;">
+      <h1 style="font-family: 'Orbitron', sans-serif; font-size: 46px; color: #fff; text-shadow: 0 0 14px #00f0ff; margin-bottom: 20px; letter-spacing: 0.05em;">
+        Willkommen bei FutureFocus
+      </h1>
+      <p style="font-size: 22px; color: #c7eaff; font-family: 'Roboto', sans-serif; text-align: center; max-width: 900px;">
+        Dein Amazon für den Balkan – Entdecke die besten Tech-, Gaming- und Haushaltsprodukte mit exklusiven Deals, Top-Qualität und ultraschnellem Support!
+      </p>
+      <div style="margin-top: 32px;">
+        <a href="#bestseller" class="anim-btn" style="background: linear-gradient(90deg, #00f0ff, #ff00f0); color: white; padding: 18px 48px; font-size: 22px; font-family: 'Orbitron', sans-serif; border-radius: 12px; text-shadow: 0 0 12px #ff00f0; box-shadow: 0 0 22px #00f0ff44; letter-spacing: 0.05em;">Jetzt Bestseller entdecken</a>
+      </div>
+    </div>
+    <!-- Animierte Glow-Partikel als Eye-Candy im Hero -->
+    <div id="glowParticles"></div>
+  </section>
+
+  <script>
+// Smooth, slow-moving, loopende Glow-Partikel
+const container = document.getElementById('glowParticles');
+const NUM_PARTICLES = 28;
+const SPEED = 0.16; // je kleiner, desto langsamer
+
+let particles = [];
+container.style.position = 'absolute';
+container.style.left = '0';
+container.style.top = '0';
+container.style.width = '100%';
+container.style.height = '100%';
+container.style.pointerEvents = 'none';
+
+function randomColor() {
+  // sanfte Farbmischung, nicht zu grell
+  const colors = [
+    'rgba(24,236,230,0.17)',
+    'rgba(255,0,240,0.16)',
+    'rgba(64,196,255,0.12)'
+  ];
+  return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function createParticles() {
+  particles = [];
+  container.innerHTML = '';
+  const rect = container.parentElement.getBoundingClientRect();
+  for (let i = 0; i < NUM_PARTICLES; i++) {
+    const dot = document.createElement('div');
+    const size = 8 + Math.random()*14;
+    dot.style.position = 'absolute';
+    dot.style.left = Math.random() * rect.width + 'px';
+    dot.style.top = Math.random() * rect.height + 'px';
+    dot.style.width = dot.style.height = size + 'px';
+    dot.style.background = `radial-gradient(circle, ${randomColor()} 60%, transparent 100%)`;
+    dot.style.borderRadius = '50%';
+    dot.style.filter = 'blur(2.5px)';
+    dot.style.opacity = 0.45 + Math.random() * 0.29;
+    dot.speedX = (Math.random() - 0.5) * SPEED;
+    dot.speedY = (Math.random() - 0.5) * SPEED;
+    dot.size = size;
+    container.appendChild(dot);
+    particles.push({
+      el: dot,
+      x: parseFloat(dot.style.left),
+      y: parseFloat(dot.style.top),
+      vx: dot.speedX,
+      vy: dot.speedY,
+      size: size,
+      area: rect
+    });
+  }
+}
+
+function animateParticles() {
+  const rect = container.parentElement.getBoundingClientRect();
+  for (let p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    // Loop: wenn außerhalb, auf anderer Seite wieder rein
+    if (p.x < -p.size) p.x = rect.width + p.size;
+    if (p.x > rect.width + p.size) p.x = -p.size;
+    if (p.y < -p.size) p.y = rect.height + p.size;
+    if (p.y > rect.height + p.size) p.y = -p.size;
+    p.el.style.left = p.x + 'px';
+    p.el.style.top = p.y + 'px';
+  }
+  requestAnimationFrame(animateParticles);
+}
+
+// Damit es immer passt, auch beim Resizen
+window.addEventListener('resize', () => {
+  createParticles();
+});
+
+createParticles();
+animateParticles();
+</script>
+
+  </script>
+<!-- BESTSELLER-BEREICH -->
+<section id="bestseller" style="margin: 56px auto 30px auto; max-width: 1280px; padding: 0 12px;">
+  <h2 style="font-family: 'Orbitron', sans-serif; font-size: 32px; color: #00f0ff; text-shadow: 0 0 10px #00f0ff; margin-bottom: 28px; text-align: center;">
+    Unsere Bestseller
+  </h2>
+  <div class="products-grid">
+    <!-- Produkt 1 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/00f0ff/ffffff&text=PS5" alt="PS5-Controller">
+      <div class="product-title">PS5 Controller</div>
+      <div class="product-desc">DualSense Wireless, NextGen Feeling.</div>
+      <div class="product-price">64,99 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 2 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/ff00f0/ffffff&text=LED" alt="LED Strip">
+      <div class="product-title">RGB LED Strip</div>
+      <div class="product-desc">Smart WiFi, App steuerbar, 5m.</div>
+      <div class="product-price">29,90 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 3 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/2d2f48/ffffff&text=Maus" alt="Gaming Maus">
+      <div class="product-title">Gaming Maus</div>
+      <div class="product-desc">RGB, 12.000 DPI, ultra-leicht.</div>
+      <div class="product-price">23,95 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 4 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/00f0ff/ffffff&text=Head" alt="Headset">
+      <div class="product-title">Gaming Headset</div>
+      <div class="product-desc">7.1 Surround, Noise Cancelling.</div>
+      <div class="product-price">39,90 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 5 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/ff00f0/ffffff&text=SSD" alt="SSD Festplatte">
+      <div class="product-title">1TB SSD</div>
+      <div class="product-desc">NVMe, rasend schnell, Plug & Play.</div>
+      <div class="product-price">54,99 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 6 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/00f0ff/ffffff&text=Stuhl" alt="Gaming Stuhl">
+      <div class="product-title">Gaming Stuhl</div>
+      <div class="product-desc">Ergo-Design, Premium Polsterung.</div>
+      <div class="product-price">129,00 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 7 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/2d2f48/ffffff&text=Pad" alt="Gaming Pad">
+      <div class="product-title">XL Gaming Pad</div>
+      <div class="product-desc">RGB, wasserfest, XXL Format.</div>
+      <div class="product-price">18,99 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+    <!-- Produkt 8 -->
+    <div class="product-card">
+      <img src="https://dummyimage.com/88x88/ff00f0/ffffff&text=Box" alt="Bluetooth Box">
+      <div class="product-title">Bluetooth Box</div>
+      <div class="product-desc">Bass Boost, 10h Akku, IPX7.</div>
+      <div class="product-price">27,99 €</div>
+      <button class="product-btn"><i class="fas fa-cart-plus"></i> In den Warenkorb</button>
+    </div>
+  </div>
+</section>
+  <!-- DEALS-BANNER & TESTIMONIALS (animiert & ansprechend) -->
+  <section style="max-width: 1220px; margin: 58px auto 0 auto; padding: 0 16px;">
+    <!-- DEALS-BANNER -->
+    <div style="background: linear-gradient(90deg, #00f0ff77 0%, #ff00f077 100%); border-radius: 14px; padding: 18px 28px; box-shadow: 0 0 34px #ff00f033; display: flex; align-items: center; gap: 25px; justify-content: center; margin-bottom: 34px;">
+      <i class="fas fa-bolt" style="font-size: 28px; color: #ff00f0; filter: drop-shadow(0 0 6px #ff00f0);"></i>
+      <span style="font-family: 'Orbitron', sans-serif; font-size: 22px; color: #fff;">
+        ⚡ Sommer-Deal: Spare bis zu <b>35 %</b> auf Gaming Zubehör & Tech!
+      </span>
+      <a href="#bestseller" class="anim-btn" style="padding: 10px 30px; font-size: 16px; margin-left: 18px;">Jetzt sichern</a>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div style="display: flex; flex-wrap: wrap; gap: 28px; justify-content: center;">
+      <div style="flex: 1 1 290px; max-width: 340px; background: #23243aee; border-radius: 16px; box-shadow: 0 0 18px #00f0ff33; padding: 23px 22px; display: flex; flex-direction: column; align-items: center;">
+        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Kunde" style="width: 62px; height: 62px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #00f0ff;">
+        <div style="font-size: 15.5px; color: #c3e9ff; margin-bottom: 11px; text-align: center;">„Mega Shop! Blitzversand nach Serbien, alles kam top verpackt an. Bin sehr zufrieden!“</div>
+        <span style="font-family: 'Orbitron', sans-serif; color: #00f0ff; font-size: 16px;">Aleksandar P.</span>
+      </div>
+      <div style="flex: 1 1 290px; max-width: 340px; background: #23243aee; border-radius: 16px; box-shadow: 0 0 18px #ff00f033; padding: 23px 22px; display: flex; flex-direction: column; align-items: center;">
+        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Kundin" style="width: 62px; height: 62px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #ff00f0;">
+        <div style="font-size: 15.5px; color: #e9cfff; margin-bottom: 11px; text-align: center;">„Endlich Technik aus Westeuropa im Balkan zu fairen Preisen – danke FutureFocus!“</div>
+        <span style="font-family: 'Orbitron', sans-serif; color: #ff00f0; font-size: 16px;">Milica S.</span>
+      </div>
+      <div style="flex: 1 1 290px; max-width: 340px; background: #23243aee; border-radius: 16px; box-shadow: 0 0 18px #00f0ff33; padding: 23px 22px; display: flex; flex-direction: column; align-items: center;">
+        <img src="https://randomuser.me/api/portraits/men/23.jpg" alt="Kunde" style="width: 62px; height: 62px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #00f0ff;">
+        <div style="font-size: 15.5px; color: #c3e9ff; margin-bottom: 11px; text-align: center;">„Die Chatbot-Hilfe ist krank, alles auf Deutsch und Serbisch! Mega Service.“</div>
+        <span style="font-family: 'Orbitron', sans-serif; color: #00f0ff; font-size: 16px;">Dusan K.</span>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER mit Kontakt, Impressum, Sprache/Währung & Eco-Bereich -->
+  <footer style="background: linear-gradient(90deg, #23243a, #2d2f48); color: #fff; border-radius: 16px 16px 0 0; margin-top: 64px; padding: 46px 0 24px 0; box-shadow: 0 0 28px #00f0ff22;">
+    <div style="max-width: 1280px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 44px; align-items: flex-start; padding: 0 18px;">
+      <!-- Kontakt -->
+      <div style="flex: 1 1 280px;">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: #00f0ff; margin-bottom: 15px; font-size: 20px;">Kontakt</h3>
+        <div style="margin-bottom: 8px;">📧 E-Mail: <a href="mailto:support@futurefocus.shop" style="color: #ff00f0;">support@futurefocus.shop</a></div>
+        <div style="margin-bottom: 8px;">📞 Tel: +43 650 1234567</div>
+        <div>🏢 Adresse: Balkanstraße 1, 11000 Belgrad</div>
+      </div>
+      <!-- Impressum -->
+      <div style="flex: 1 1 240px;">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: #ff00f0; margin-bottom: 15px; font-size: 20px;">Impressum</h3>
+        <div>FutureFocus OG</div>
+        <div>Kristijan Zaric & David Schulz</div>
+        <div>UID: ATU12345678</div>
+        <div style="margin-top: 9px;"><a href="#" style="color: #00f0ff;">Datenschutz</a> | <a href="#" style="color: #ff00f0;">AGB</a></div>
+      </div>
+      <!-- Sprache/Währung -->
+      <div style="flex: 1 1 210px;">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: #00f0ff; margin-bottom: 15px; font-size: 20px;">Sprache & Währung</h3>
+        <div style="margin-bottom: 8px;">
+          <select id="languageSelect" style="padding: 8px; border-radius: 7px; border: none;">
+            <option value="de">Deutsch</option>
+            <option value="sr">Srpski</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <div>
+          <select id="currencySelect" style="padding: 8px; border-radius: 7px; border: none;">
+            <option value="EUR">€ Euro</option>
+            <option value="RSD">RSD Dinar</option>
+            <option value="USD">$ USD</option>
+          </select>
+        </div>
+      </div>
+      <!-- ECO & Info -->
+      <div style="flex: 1 1 200px;">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: #00f0ff; margin-bottom: 15px; font-size: 20px;">Eco & Info</h3>
+        <div style="margin-bottom: 8px;">🌱 Versand zu 98 % plastikfrei</div>
+        <div>🚚 Klimaneutraler Versand nach Österreich, Serbien & Balkan</div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 38px; color: #999; font-size: 16px;">
+      &copy; 2025 FutureFocus. Alle Rechte vorbehalten.
+    </div>
+  </footer>
+
+  <!-- Scripts für Sprache/Währung -->
+  <script>
+    // Sprachauswahl & Währung (nur Optik, Funktion nachrüstbar)
+    document.getElementById('languageSelect').addEventListener('change', function() {
+     
+    });
+    document.getElementById('currencySelect').addEventListener('change', function() {
+      
+    });
+  </script>
+  <!-- REGISTRIEREN & LOGIN (vollwertiges Modal mit Animation) -->
+  <div class="modal-bg" id="registerModalBg" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(25,25,40,0.86); align-items: center; justify-content: center;">
+    <div class="modal" style="position: relative; background: #23243a; border-radius: 14px; padding: 40px 36px; min-width: 320px; max-width: 97vw; box-shadow: 0 0 32px #00f0ff99; display: flex; flex-direction: column; align-items: center; animation: popIn 0.33s cubic-bezier(.41,1.6,.58,1.11);">
+      <button class="close-btn" id="closeRegisterModal" style="background: none; color: #ff5050; font-size: 27px; position: absolute; right: 23px; top: 19px; border: none; cursor: pointer; box-shadow: none; padding: 0;">&times;</button>
+      <h2 style="font-family: 'Orbitron', sans-serif; color: #00f0ff; font-size: 26px; margin-bottom: 28px;">Konto erstellen / Login</h2>
+      <input type="text" id="regEmail" placeholder="E-Mail-Adresse" style="width: 98%; margin: 10px 0 16px 0; padding: 9px 10px; border-radius: 6px; border: 1.3px solid #00f0ff; font-size: 16px; background: #1e1f2c; color: #fff; outline: none;">
+      <input type="password" id="regPassword" placeholder="Passwort" style="width: 98%; margin: 0 0 16px 0; padding: 9px 10px; border-radius: 6px; border: 1.3px solid #00f0ff; font-size: 16px; background: #1e1f2c; color: #fff; outline: none;">
+      <button id="registerSubmit" style="margin-top: 8px; padding: 9px 22px; background: linear-gradient(90deg, #00f0ff, #ff00f0); color: #fff; font-size: 17px; border-radius: 6px; box-shadow: 0 0 10px #ff00f0; font-weight: 700; letter-spacing: 0.05em;">Anmelden</button>
+      <div style="margin-top: 18px; font-size: 15px; color: #ccc;">Noch kein Konto? <a href="#" id="registerLink" style="color: #ff00f0;">Jetzt registrieren</a></div>
+    </div>
+  </div>
+
+  <script>
+    // Modal öffnen/schließen
+    document.getElementById('loginBtn').onclick = () => { document.getElementById('registerModalBg').style.display = 'flex'; }
+    document.getElementById('closeRegisterModal').onclick = () => { document.getElementById('registerModalBg').style.display = 'none'; }
+    window.onclick = function(e) {
+      if (e.target == document.getElementById('registerModalBg')) { document.getElementById('registerModalBg').style.display = "none"; }
+    };
+    // Demo: Register-Link nur für Optik (Funktion nachrüstbar)
+    document.getElementById('registerLink').onclick = (e) => {
+      e.preventDefault();
+      alert('Registrierung in Entwicklung! Stay tuned 🚀');
+    };
+  </script>
+  <!-- WARENKORB-OVERLAY (mit Zähler & Beispiel-Logik) -->
+  <div id="cartOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15,20,38,0.90); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #23243a; border-radius: 18px; padding: 42px 32px; min-width: 350px; max-width: 96vw; box-shadow: 0 0 34px #00f0ff88; position: relative; display: flex; flex-direction: column; align-items: center;">
+      <button id="closeCart" style="background: none; color: #ff5050; font-size: 27px; position: absolute; right: 23px; top: 19px; border: none; cursor: pointer;">&times;</button>
+      <h2 style="font-family: 'Orbitron', sans-serif; color: #00f0ff; font-size: 24px; margin-bottom: 20px;">Warenkorb</h2>
+      <div id="cartItems" style="min-height: 55px; color: #fff; margin-bottom: 18px; text-align: center;">
+        Noch keine Produkte im Warenkorb.
+      </div>
+      <button style="margin-top: 10px; padding: 11px 34px; background: linear-gradient(90deg, #00f0ff, #ff00f0); color: #fff; font-size: 18px; border-radius: 7px; box-shadow: 0 0 10px #ff00f0; font-weight: 700;">Zur Kasse</button>
+    </div>
+  </div>
+
+  <!-- Warenkorb-Zähler & Button-Logik -->
+  <style>
+    #cartCount {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ff00f0;
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      border: 2px solid #23243a;
+      box-shadow: 0 0 6px #00f0ff88;
+      z-index: 2;
+    }
+  </style>
+  <script>
+    // Warenkorb Overlay öffnen/schließen
+    const cartOverlay = document.getElementById('cartOverlay');
+    const closeCart = document.getElementById('closeCart');
+    const cartBtns = document.querySelectorAll('.product-btn');
+    const cartCountBtn = document.querySelector('.fa-shopping-cart');
+    let cartCount = 0;
+    let cartProducts = [];
+
+    cartBtns.forEach(btn => {
+      btn.onclick = () => {
+        cartCount++;
+        // Dummy-Produktname (aus Produkt-Card)
+        const product = btn.parentNode.querySelector('.product-title').textContent;
+        cartProducts.push(product);
+        showCartCount();
+        showCartOverlay();
+      };
+    });
+
+    function showCartCount() {
+      let countElem = document.getElementById('cartCount');
+      if (!countElem) {
+        const btn = document.querySelector('.fa-shopping-cart').parentNode;
+        countElem = document.createElement('div');
+        countElem.id = 'cartCount';
+        btn.style.position = "relative";
+        btn.appendChild(countElem);
+      }
+      document.getElementById('cartCount').textContent = cartCount;
+    }
+
+    function showCartOverlay() {
+      const items = cartProducts.map((prod, i) => `<div>${i+1}. ${prod}</div>`).join('');
+      document.getElementById('cartItems').innerHTML = items || 'Noch keine Produkte im Warenkorb.';
+      cartOverlay.style.display = "flex";
+    }
+
+    cartCountBtn.onclick = () => { showCartOverlay(); }
+    closeCart.onclick = () => { cartOverlay.style.display = "none"; }
+    window.onclick = function(e) {
+      if (e.target == cartOverlay) { cartOverlay.style.display = "none"; }
+    };
+  </script>
+  <!-- SPRACH- & WÄHRUNGSAUSWAHL (interaktiv, komplett umgesetzt) -->
+  <div id="languageCurrencyBar" style="display: flex; justify-content: flex-end; align-items: center; gap: 18px; margin: 18px 3vw 0 0;">
+    <div>
+      <label for="langSelect" style="color: #00f0ff; font-weight: bold; font-size: 15px; margin-right: 6px;">🌐 Sprache:</label>
+      <select id="langSelect" style="padding: 7px 14px; border-radius: 7px; background: #181a2e; color: #fff; border: 1.2px solid #00f0ff;">
+        <option value="de">Deutsch</option>
+        <option value="sr">Srpski</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div>
+      <label for="currSelect" style="color: #ff00f0; font-weight: bold; font-size: 15px; margin-right: 6px;">💶 Währung:</label>
+      <select id="currSelect" style="padding: 7px 14px; border-radius: 7px; background: #181a2e; color: #fff; border: 1.2px solid #ff00f0;">
+        <option value="EUR">€ Euro</option>
+        <option value="RSD">RSD Dinar</option>
+        <option value="USD">$ USD</option>
+      </select>
+    </div>
+  </div>
+  <script>
+    // Sprachumschalter (Demo)
+    document.getElementById('langSelect').addEventListener('change', function() {
+      // Hier könnte man bei echter Multilingual-Site dynamisch Inhalte anpassen!
+    });
+    // Währungsumschalter (Demo)
+    document.getElementById('currSelect').addEventListener('change', function() {
+      
+      // Hier könnte dynamisch alles umgerechnet werden!
+    });
+  </script>
+  <!-- NEWSLETTER-BEREICH (XXL, modern & animiert) -->
+  <section style="max-width: 1220px; margin: 60px auto 0 auto; padding: 0 16px;">
+    <div style="background: linear-gradient(90deg, #00f0ff44 0%, #ff00f044 100%); border-radius: 18px; box-shadow: 0 0 34px #00f0ff33; padding: 38px 30px; display: flex; flex-direction: column; align-items: center;">
+      <h3 style="font-family: 'Orbitron', sans-serif; color: #ff00f0; font-size: 26px; margin-bottom: 19px;">🔔 Newsletter – Verpasse keine Balkan-Deals!</h3>
+      <p style="font-size: 18px; color: #eee; margin-bottom: 22px; text-align: center; max-width: 600px;">
+        Trage dich ein und erhalte exklusive Rabatte, Aktionen und Vorabinfos zu brandneuen Produkten.
+      </p>
+      <form id="newsletterForm" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+        <input type="email" id="newsletterEmail" placeholder="E-Mail-Adresse" required style="padding: 12px 20px; border-radius: 8px; font-size: 17px; border: 1.3px solid #00f0ff; background: #23243a; color: #fff; min-width: 260px;">
+        <button type="submit" class="anim-btn" style="padding: 12px 38px; font-size: 17px; background: linear-gradient(90deg, #00f0ff, #ff00f0); color: #fff; border-radius: 8px; font-weight: bold; box-shadow: 0 0 14px #ff00f0;">Anmelden</button>
+      </form>
+      <div id="newsletterMsg" style="margin-top: 17px; color: #00f0ff; font-weight: bold; font-size: 16px; display: none;">Danke für deine Anmeldung!</div>
+    </div>
+  </section>
+  <script>
+    // Newsletter Demo-Submit
+    document.getElementById('newsletterForm').onsubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('newsletterMsg').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('newsletterMsg').style.display = 'none';
+        document.getElementById('newsletterEmail').value = '';
+      }, 2400);
+    };
+  </script>
+ <!-- FUTUREFOCUS XXL-CHATBOT (richtig mächtig & umfangreich) -->
+<div id="chatbotOverlay" style="display:none; position:fixed; bottom:98px; right:38px; width:360px; max-width:97vw; height:500px; background:#23243a; border-radius:20px; box-shadow:0 0 40px #00f0ff99; z-index:99999; flex-direction:column; overflow:hidden;">
+  <div style="background:linear-gradient(90deg,#00f0ff77,#ff00f077); padding:16px 20px 13px 20px; display:flex; align-items:center; justify-content:space-between;">
+    <span style="font-family:'Orbitron',sans-serif; color:#00f0ff; font-size:22px;">
+      <i class="fas fa-robot"></i> FutureBot
+    </span>
+    <button id="closeChatbot" style="background:none; border:none; color:#ff00f0; font-size:26px; cursor:pointer; font-weight:bold;">&times;</button>
+  </div>
+  <div id="chatMessages" style="flex:1; padding:18px 14px 8px 14px; overflow-y:auto; font-size:15.7px; color:#fff; border-bottom:1.5px solid #31304a;">
+    <div style="color:#00f0ff; font-family:'Orbitron',sans-serif; margin-bottom:9px;">🤖 FutureBot: Hallo! Schreibe <b>/faq</b> für häufige Fragen.</div>
+  </div>
+  <form id="chatForm" style="display:flex; border-top:1.5px solid #31304a; background:#1a1b2e;">
+    <input id="chatInput" type="text" placeholder="Nachricht schreiben..." autocomplete="off" style="flex:1; padding:13px; font-size:15px; border:none; background:#181a2e; color:#fff; border-bottom-left-radius:20px;">
+    <button type="submit" style="padding:0 20px; background:linear-gradient(90deg,#00f0ff,#ff00f0); color:#fff; border:none; border-bottom-right-radius:20px; font-size:18px; cursor:pointer;">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </form>
+</div>
+
+<script>
+  // Helper für Zeitstempel
+  function timeNow() {
+    const now = new Date();
+    return now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // Chatbot Öffnen/Schließen
+  const chatbotButton = document.getElementById('chatbotButton');
+  const chatbotOverlay = document.getElementById('chatbotOverlay');
+  const closeChatbot = document.getElementById('closeChatbot');
+  if(chatbotButton) {
+    chatbotButton.onclick = () => {
+      chatbotOverlay.style.display = "flex";
+      setTimeout(() => {
+        const input = document.getElementById('chatInput');
+        if(input) input.focus();
+      }, 120);
+    };
+    chatbotButton.onmouseover = () => {
+      chatbotButton.style.transform = 'scale(1.13) rotate(-8deg)';
+      chatbotButton.style.boxShadow = '0 0 34px #ff00f0, 0 0 17px #00f0ff';
+    };
+    chatbotButton.onmouseleave = () => {
+      chatbotButton.style.transform = 'scale(1)';
+      chatbotButton.style.boxShadow = '0 0 22px #00f0ff';
+    };
+  }
+  if(closeChatbot) {
+    closeChatbot.onclick = () => { chatbotOverlay.style.display = "none"; }
+  }
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && chatbotOverlay.style.display === 'flex') {
+      chatbotOverlay.style.display = 'none';
+    }
+  });
+
+  // XXL-FAQ-Datenbank
+  const faqs = [
+    { q: ["zahlung","zahlen","zahlungsmethoden","bezahl","wie bezahlen"], a: "💳 Wir akzeptieren <b>Kreditkarte</b>, <b>Paypal</b>, <b>Sofortüberweisung</b> und <b>Vorkasse</b>. In Serbien auch <b>Nachnahme</b> (Plaćanje pouzećem)!" },
+    { q: ["versand","lieferung","shipping","dauert","wie lange"], a: "🚚 Versand nach Österreich: <b>1-2 Werktage</b>. Balkan: <b>2-5 Werktage</b>. Schneller, klimaneutral und trackbar! 🌱" },
+    { q: ["rückgabe","retoure","umtausch","zurückgeben","rücksendung"], a: "🔁 Du hast <b>14 Tage Rückgaberecht</b>! Schreib uns an support@futurefocus.shop – wir machen's einfach." },
+    { q: ["garantie","gewährleistung","defekt","kaputt"], a: "🛡️ 2 Jahre Garantie auf alle Produkte! Bei Defekt sofort melden – wir tauschen aus oder erstatten." },
+    { q: ["agb","bedingungen","recht"], a: "📄 Unsere AGB & Datenschutz findest du ganz unten im Footer. Bei Fragen gerne direkt schreiben!" },
+    { q: ["support","hilfe","kontakt","kontaktieren"], a: "📞 Unser Support-Team ist 7 Tage/Woche für dich da! Mail an support@futurefocus.shop oder einfach hier im Chat." },
+    { q: ["faq","häufige fragen"], a: "📚 Häufige Fragen: <br> - <b>Wie bezahlen?</b> Kreditkarte, Paypal, Sofort, Nachnahme. <br> - <b>Lieferzeit?</b> 1–5 Tage. <br> - <b>Rückgabe?</b> 14 Tage. <br> - <b>Garantie?</b> 2 Jahre. <br> Für mehr, einfach nachfragen!" },
+    { q: ["angebot","rabatt","gutschein","sale","deal"], a: "🔥 Aktuell: <b>Sommer-Deal bis 35 % Rabatt</b> auf Gaming-Zubehör! Gutscheincode: <span style='color:#ff00f0; font-weight:bold;'>FFSUMMER24</span>" },
+    { q: ["produkte","kategorien","sortiment","was habt ihr"], a: "🎮 Unser Sortiment: <b>Gaming</b>, <b>Technik</b>, <b>Haushalt</b>, <b>Smartphones</b>, <b>Küche</b>, <b>Tools</b>, <b>Beauty</b>, <b>Zubehör</b>. Klick auf 'Kategorien' oben für alle Bereiche!" },
+    { q: ["newsletter"], a: "📧 Melde dich beim Newsletter an (unten auf der Seite) und erhalte exklusive Angebote & Vorab-Infos zu neuen Produkten!" },
+    { q: ["serbien","serbisch","balkan"], a: "🇷🇸 Wir liefern direkt nach Serbien, Bosnien, Kroatien, Montenegro & ganz Balkan! Bezahlen & Support auch auf Serbisch möglich." },
+    { q: ["öffnungszeiten","wann offen","zeiten"], a: "🕗 Wir sind online 24/7 erreichbar! Support antwortet Mo-So von 8:00 bis 20:00 Uhr." },
+    { q: ["social","tiktok","instagram","facebook","twitter","x"], a: "📱 Folge uns: TikTok, Instagram, X & Facebook – Links findest du oben!" }
+  ];
+
+  // Synonyme/Normalisierung
+  function normalize(msg) {
+    return msg.toLowerCase()
+      .replace(/[äÄ]/g, 'ae')
+      .replace(/[öÖ]/g, 'oe')
+      .replace(/[üÜ]/g, 'ue')
+      .replace(/ß/g, 'ss')
+      .replace(/[^a-z0-9\s]/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  // XXL-Chatbot-Logik
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+  if(chatForm && chatInput && chatMessages) {
+    chatForm.onsubmit = function(e) {
+      e.preventDefault();
+      const rawMsg = chatInput.value.trim();
+      if(!rawMsg) return;
+      const msg = normalize(rawMsg);
+      // User Nachricht anzeigen
+      const userMsg = document.createElement('div');
+      userMsg.style.marginBottom = '7px';
+      userMsg.style.textAlign = 'right';
+      userMsg.innerHTML = `<span style="background:#2d2f48; color:#ff00f0; padding:7px 15px; border-radius:11px; display:inline-block; max-width:90%;">${rawMsg}</span><span style="color:#ccc; font-size:11px; margin-left:9px;">${timeNow()}</span>`;
+      chatMessages.appendChild(userMsg);
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // XXL-Befehle & Antworten
+      setTimeout(() => {
+        let antwort = null;
+
+        // Sonderbefehle
+        if(msg.startsWith("/faq") || msg.includes("häufige fragen")) {
+          antwort = faqs.find(f => f.q.includes("faq")).a;
+        }
+        if(msg.startsWith("/help") || msg.startsWith("/hilfe")) {
+          antwort = "🆘 Schreibe einfach deine Frage – z. B. zu Bezahlung, Versand, Garantie, Kategorien, Kontakt…";
+        }
+        // FAQ-Erkennung (Multi-Keyword)
+        if(!antwort) {
+          for(const f of faqs) {
+            for(const q of f.q) {
+              if(msg.includes(q)) { antwort = f.a; break; }
+            }
+            if(antwort) break;
+          }
+        }
+        // Smalltalk
+        if(!antwort) {
+          if(msg.match(/^(hi|hallo|servus|hey|gruesse|guten tag)/i)) {
+            antwort = "Hallo! 👋 Wie kann ich helfen?";
+          } else if(msg.includes("danke") || msg.includes("merci") || msg.includes("thx")) {
+            antwort = "Immer gerne! 😊";
+          } else if(msg.includes("bye") || msg.includes("tschüss") || msg.includes("auf wiedersehen")) {
+            antwort = "Ciao! Bei weiteren Fragen gerne wieder schreiben! 👋";
+          }
+        }
+        // Fallback
+        if(!antwort) {
+          antwort = "❓ Sorry, dazu habe ich aktuell keine Info. Schreib uns einfach an <b>support@futurefocus.shop</b>!";
+        }
+
+        const botMsg = document.createElement('div');
+        botMsg.style.marginBottom = '8px';
+        botMsg.style.textAlign = 'left';
+        botMsg.innerHTML = `<span style="background:#252541; color:#00f0ff; padding:7px 15px; border-radius:11px; display:inline-block; max-width:90%;">${antwort}</span><span style="color:#ccc; font-size:11px; margin-left:8px;">${timeNow()}</span>`;
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 650);
+    }
+  }
+  // Helper für Zeitstempel
+function timeNow() {
+  const now = new Date();
+  return now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+}
+
+// Hier neues Script einfügen:
+const titles = {
+  de: "FutureFocus - Dein Balkan-Shop",
+  en: "FutureFocus - Your Balkan Shop",
+  sr: "FutureFocus - Tvoja balkanska prodavnica"
+};
+
+function setTitle(lang) {
+  const titleElem = document.getElementById('pageTitle');
+  if (titleElem && titles[lang]) {
+    titleElem.textContent = titles[lang];
+  }
+}
+
+// Sprache aus URL-Parameter holen (z.B. ?lang=de)
+const urlParams = new URLSearchParams(window.location.search);
+const lang = urlParams.get('lang') || 'de';  // Standard Deutsch
+
+setTitle(lang);
+
+// Chatbot Öffnen/Schließen etc. weiter unten...
+</script>
